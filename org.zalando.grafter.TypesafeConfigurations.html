@@ -137,13 +137,9 @@ val okDevOverride: Config[Dev] =
   developmentConfig.copy(paymentsUri = sandboxPaymentsUri)</code></pre>
 <h3 id="readers">Readers</h3>
 <p>What about the <code class="prettyprint">@readers</code> annotation? What does it generate for fields annotated with <code class="prettyprint">Prod</code> or <code class="prettyprint">Dev</code>?</p>
-The <code class="prettyprint">readers</code> annotation is smart enough to recognize those fields and create a <code class="prettyprint">Reader</code> instance stripping out the environment annotation, for example: <code class="prettyprint">implicit def paymentsUriReader[A1]: Reader[Config[A1], Uri] =   Reader(_.paymentsUri._1)</code>
-<table class="datatable">
-        <tr><th colSpan="2">Total for specification Typesafe configurations</th></tr>
-        <tr><td>Finished in</td><td class="info">52 ms</td></tr>
-        <tr><td>Results</td><td class="success">
-          0 example, 0 failure, 0 error</td></tr>
-      </table>
+<p>The <code class="prettyprint">readers</code> annotation is smart enough to recognize those fields and create a <code class="prettyprint">Reader</code> instance stripping out the environment annotation, for example:</p>
+<pre><code class="prettyprint">implicit def paymentsUriReader[A1]: Reader[Config[A1], Uri] =
+  Reader(_.paymentsUri._1)</code></pre>
 </div>
 
 </div>

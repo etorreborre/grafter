@@ -148,13 +148,32 @@ lazy val httpClientSingletons: PartialFunction[Any, Any] = {
   case c: HttpClient =&gt; c.config
   case c: HttpClientConfig =&gt; c
 }</code></pre>
-This leads to the final application graph: <code class="prettyprint">+-------+                             |  App  |                             +-------+                                 |                          +--------------+               +----------|  HttpServer  |-------+               |          +--------------+       |               |                                 |      +-------------------+              +----------------+      | GetCustomersRoute |              | GetOrdersRoute |      +-------------------+              +----------------+                |                           |        |   +-----------------+                      |  +--------------+   | CustomerService |----------------------+  | PriceService |   +-----------------+                         +--------------+           |                                         |   +------------+                               +------------+   | HttpClient |                               | HttpClient |   +------------+                               +------------+           |                                         |   +------------------+                        +------------------+   | HttpClientConfig |                        | HttpClientConfig |   +------------------+                        +------------------+   | uri = &quot;http://c&quot; |                        | uri = &quot;http://p&quot; |   +------------------+                        +------------------+</code>
-<table class="datatable">
-        <tr><th colSpan="2">Total for specification Singletons</th></tr>
-        <tr><td>Finished in</td><td class="info">37 ms</td></tr>
-        <tr><td>Results</td><td class="success">
-          0 example, 0 failure, 0 error</td></tr>
-      </table>
+<p>This leads to the final application graph:</p>
+<pre><code class="prettyprint">                            +-------+
+                            |  App  |
+                            +-------+
+                                |
+                         +--------------+
+              +----------|  HttpServer  |-------+
+              |          +--------------+       |
+              |                                 |
+     +-------------------+              +----------------+
+     | GetCustomersRoute |              | GetOrdersRoute |
+     +-------------------+              +----------------+
+               |                           |        |
+  +-----------------+                      |  +--------------+
+  | CustomerService |----------------------+  | PriceService |
+  +-----------------+                         +--------------+
+          |                                         |
+  +------------+                               +------------+
+  | HttpClient |                               | HttpClient |
+  +------------+                               +------------+
+          |                                         |
+  +------------------+                        +------------------+
+  | HttpClientConfig |                        | HttpClientConfig |
+  +------------------+                        +------------------+
+  | uri = &quot;http://c&quot; |                        | uri = &quot;http://p&quot; |
+  +------------------+                        +------------------+</code></pre>
 </div>
 
 </div>

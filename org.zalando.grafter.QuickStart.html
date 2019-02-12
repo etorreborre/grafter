@@ -49,7 +49,6 @@
 <p>Here is a minimal example of an application using grafter</p>
 <pre><code class="prettyprint">import org.zalando.grafter.macros.{readers, reader, defaultReader}
 import org.zalando.grafter.{Start, StartResult}
-import org.zalando.grafter.syntax.rewriter._
 import cats.Eval
 
 // CONFIGURATION
@@ -84,31 +83,28 @@ case class PostgresDatabase(config: DbConfig) extends Database with Start {
 
 // TOP-LEVEL APPLICATION
 @reader
-case class Application(httpServer: HttpServer, database: Database)
+case class Application(httpServer: HttpServer, database: Database)</code></pre>
+<pre><code class="prettyprint">object Main {
 
-// MAIN METHOD
-def main(args: Array[String]): Unit = {
+  // MAIN METHOD
+  def main(args: Array[String]): Unit = {
 
-  val config: ApplicationConfig =
-    ApplicationConfig(HttpConfig(&quot;localhost&quot;, 8080), DbConfig(&quot;jdbc://postgres&quot;))
+    val config: ApplicationConfig =
+      ApplicationConfig(HttpConfig(&quot;localhost&quot;, 8080), DbConfig(&quot;jdbc://postgres&quot;))
 
-  val application: Application =
-    Application.reader[ApplicationConfig].apply(config).singletons
+    val application: Application =
+      Application.reader[ApplicationConfig].apply(config).singletons
 
-  val started = application.startAll.value
+    val started = application.startAll.value
 
-  if (started.forall(_.success))
-    println(&quot;application started successfully&quot;)
-  else
-    println(started.mkString(&quot;\n&quot;))
+    if (started.forall(_.success))
+      println(&quot;application started successfully&quot;)
+    else
+      println(started.mkString(&quot;\n&quot;))
+  }
+
 }</code></pre>
-As you can see in the main method, building the application from its configuration and starting it is just 2 lines of code. Read the page on <link class="ok"> <a href="org.zalando.grafter.Concepts.html" tooltip="" class="ok">concepts</a></link> to understand how it all works.
-<table class="datatable">
-        <tr><th colSpan="2">Total for specification Quick Start</th></tr>
-        <tr><td>Finished in</td><td class="info">18 ms</td></tr>
-        <tr><td>Results</td><td class="success">
-          0 example, 0 failure, 0 error</td></tr>
-      </table>
+<p>As you can see in the main method, building the application from its configuration and starting it is just 2 lines of code. Read the page on <link class="ok"> <a href="org.zalando.grafter.Concepts.html" tooltip="" class="ok">concepts</a></link> to understand how it all works.</p>
 </div>
 
 </div>

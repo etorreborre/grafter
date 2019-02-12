@@ -56,19 +56,13 @@ val testConfiguration =
 // create the application from the test configuration
 // and mock the database
 val application: Application =
-  Application.reader.apply(testConfiguration).
+  Application.reader[ApplicationConfig].apply(testConfiguration).
     singletons.
     replace[Database](mockDatabase)
 
 application.startAll</code></pre>
 <p><em>Note</em>: due to a limitation with the rewriting, final case classes with one arguments <em>cannot</em> be replaced!</p>
-It is also particularly important to test that the <link class="ok"> <a href="org.zalando.grafter.TestConfiguration.html" tooltip="" class="ok">application itself is properly configured</a></link>.
-<table class="datatable">
-        <tr><th colSpan="2">Total for specification Test the application</th></tr>
-        <tr><td>Finished in</td><td class="info">18 ms</td></tr>
-        <tr><td>Results</td><td class="success">
-          0 example, 0 failure, 0 error</td></tr>
-      </table>
+<p>It is also particularly important to test that the <link class="ok"> <a href="org.zalando.grafter.TestConfiguration.html" tooltip="" class="ok">application itself is properly configured</a></link>.</p>
 </div>
 
 </div>
