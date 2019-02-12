@@ -19,7 +19,6 @@ Here is a minimal example of an application using grafter ${snippet{
 
 import org.zalando.grafter.macros.{readers, reader, defaultReader}
 import org.zalando.grafter.{Start, StartResult}
-import org.zalando.grafter.syntax.rewriter._
 import cats.Eval
 
 // CONFIGURATION
@@ -55,25 +54,29 @@ case class PostgresDatabase(config: DbConfig) extends Database with Start {
 // TOP-LEVEL APPLICATION
 @reader
 case class Application(httpServer: HttpServer, database: Database)
-
-// MAIN METHOD
-def main(args: Array[String]): Unit = {
-
-  val config: ApplicationConfig =
-    ApplicationConfig(HttpConfig("localhost", 8080), DbConfig("jdbc://postgres"))
-
-  val application: Application =
-    Application.reader[ApplicationConfig].apply(config).singletons
-
-  val started = application.startAll.value
-
-  if (started.forall(_.success))
-    println("application started successfully")
-  else
-    println(started.mkString("\n"))
-}
 }}
+```
+object Main {
 
+  // MAIN METHOD
+  def main(args: Array[String]): Unit = {
+
+    val config: ApplicationConfig =
+      ApplicationConfig(HttpConfig("localhost", 8080), DbConfig("jdbc://postgres"))
+
+    val application: Application =
+      Application.reader[ApplicationConfig].apply(config).singletons
+
+    val started = application.startAll.value
+
+    if (started.forall(_.success))
+      println("application started successfully")
+    else
+      println(started.mkString("\n"))
+  }
+
+}
+```
 As you can see in the main method, building the application from its configuration and starting it is just 2 lines of code.
 Read the page on ${"concepts" ~/ Concepts} to understand how it all works.
 
